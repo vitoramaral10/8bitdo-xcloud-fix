@@ -26,14 +26,30 @@ rodar o `xboxdrv` com **`--force-feedback`** (vibração) + **`--mimic-xpad`**
 
 ## Instalação
 
-### CachyOS / Arch (recomendado — pacote pacman)
+### CachyOS / Arch (recomendado — AUR)
+
+O pacote está no [AUR](https://aur.archlinux.org/packages/8bitdo-xcloud-fix).
+Um *helper* (`paru`/`yay`) instala **tudo de uma vez**, incluindo a dependência
+`xboxdrv` (que também está no AUR):
 
 ```sh
-paru -S xboxdrv                # dependência (AUR)
-git clone <este-repo> && cd 8bitdo-xcloud-fix
-makepkg -si                    # constrói e instala o pacote
+paru -S 8bitdo-xcloud-fix
 sudo systemctl enable --now 8bitdo-xcloud
 ```
+
+Ou, construindo a partir deste repositório:
+
+```sh
+git clone https://github.com/vitoramaral10/8bitdo-xcloud-fix.git
+cd 8bitdo-xcloud-fix
+paru -Bi .                     # resolve xboxdrv (AUR) + constrói e instala o pacote
+sudo systemctl enable --now 8bitdo-xcloud
+```
+
+> **Por que não `makepkg -si`?** O `makepkg` só instala dependências dos
+> repositórios oficiais; como `xboxdrv` está no AUR, ele pede para instalá-lo
+> antes. Um *helper* de AUR (`paru`/`yay`) resolve essa dependência
+> automaticamente. Se preferir o `makepkg`, instale antes: `paru -S xboxdrv`.
 
 ### Qualquer distro com systemd (instalador universal)
 
