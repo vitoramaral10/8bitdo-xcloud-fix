@@ -1,6 +1,6 @@
 # Maintainer: Vitor Amaral <vitor.amaral10@gmail.com>
 pkgname=8bitdo-xcloud-fix
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="Xbox 360 emulation (xboxdrv) for the 8BitDo Ultimate 2 — fixes button mapping and rumble on Xbox Cloud Gaming, Steam/Proton and emulators"
 arch=('any')

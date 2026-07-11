@@ -8,6 +8,9 @@ StartLimitIntervalSec=0
 
 [Service]
 Type=simple
+# Garante o uinput carregado mesmo fora do boot (modules-load.d cobre o boot);
+# o "-" tolera falha para não impedir o start em sistemas sem modprobe no PATH.
+ExecStartPre=-/bin/sh -c 'modprobe uinput'
 ExecStart=/usr/bin/8bitdo-xcloud-daemon
 Restart=always
 RestartSec=3

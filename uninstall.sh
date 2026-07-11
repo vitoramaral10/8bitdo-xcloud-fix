@@ -15,6 +15,7 @@ echo ">> Removendo arquivos..."
 rm -f /usr/bin/8bitdo-xcloud-daemon
 rm -f /usr/lib/systemd/system/8bitdo-xcloud.service
 rm -f /usr/lib/udev/rules.d/99-8bitdo-xcloud.rules
+rm -f /usr/lib/modules-load.d/8bitdo-xcloud.conf
 
 systemctl daemon-reload
 udevadm control --reload-rules 2>/dev/null || true

@@ -98,7 +98,9 @@ que chama o `xboxdrv` com:
 - `--mimic-xpad` — se comporta como o `xpad` nativo (melhora a compatibilidade)
 - `--evdev-absmap` / `--evdev-keymap` — mapeiam eixos e botões para o Xbox 360
 
-Uma regra `udev` reinicia o serviço automaticamente quando você conecta o controle.
+Uma regra `udev` reinicia o serviço automaticamente quando você conecta o controle,
+e um arquivo em `modules-load.d` garante o módulo `uinput` carregado no boot
+(sem ele o xboxdrv não consegue criar o controle virtual).
 
 ## Desinstalação
 
@@ -116,6 +118,7 @@ sudo ./uninstall.sh
 | `bin/8bitdo-xcloud-daemon` | `/usr/bin/8bitdo-xcloud-daemon` |
 | `systemd/8bitdo-xcloud.service` | `/usr/lib/systemd/system/8bitdo-xcloud.service` |
 | `udev/99-8bitdo-xcloud.rules` | `/usr/lib/udev/rules.d/99-8bitdo-xcloud.rules` |
+| `modules-load/8bitdo-xcloud.conf` | `/usr/lib/modules-load.d/8bitdo-xcloud.conf` |
 | `config/8bitdo-xcloud.conf` | `/etc/8bitdo-xcloud.conf` |
 
 ## Licença
