@@ -1,0 +1,6 @@
+# 8BitDo Ultimate 2 Wireless — (re)inicia o serviço de emulação ao conectar.
+# Cobre o modo XInput (310b) e também DInput (6012) e undocked (3106); se você
+# usar um desses outros modos, ajuste DEVICE_ID em /etc/8bitdo-xcloud.conf.
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2dc8", ATTR{idProduct}=="310b", TAG+="systemd", ENV{SYSTEMD_WANTS}="8bitdo-xcloud.service"
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2dc8", ATTR{idProduct}=="6012", TAG+="systemd", ENV{SYSTEMD_WANTS}="8bitdo-xcloud.service"
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2dc8", ATTR{idProduct}=="3106", TAG+="systemd", ENV{SYSTEMD_WANTS}="8bitdo-xcloud.service"

@@ -1,0 +1,36 @@
+#!/bin/sh
+# 8bitdo-xcloud-daemon — sobe o xboxdrv emulando um Xbox 360 a partir do
+# 8BitDo Ultimate 2, com o mapeamento e a vibração corretos para
+# xCloud (navegador), Steam/Proton e emuladores.
+#
+# É executado pelo serviço systemd 8bitdo-xcloud.service, mas também pode ser
+# rodado direto (como root) para depurar. Lê a config em /etc/8bitdo-xcloud.conf.
+set -eu
+
+CONF="${XCLOUD_CONF:-/etc/8bitdo-xcloud.conf}"
+[ -r "$CONF" ] && . "$CONF"
+
+# Padrões (usados se a config não existir/estiver incompleta).
+# DEVICE_ID: VID:PID do controle. 2dc8:310b = Ultimate 2 Wireless em modo XInput.
+DEVICE_ID="${DEVICE_ID:-2dc8:310b}"
+ABSMAP="${ABSMAP:-ABS_X=x1,ABS_Y=y1,ABS_RX=x2,ABS_RY=y2,ABS_Z=lt,ABS_RZ=rt,ABS_HAT0X=dpad_x,ABS_HAT0Y=dpad_y}"
+KEYMAP="${KEYMAP:-BTN_SOUTH=a,BTN_EAST=b,BTN_NORTH=y,BTN_WEST=x,BTN_TL=lb,BTN_TR=rb,BTN_THUMBL=tl,BTN_THUMBR=tr,BTN_SELECT=back,BTN_START=start,BTN_MODE=guide}"
+EXTRA_ARGS="${EXTRA_ARGS:-}"
+
+if ! command -v xboxdrv >/dev/null 2>&1; then
+	echo "8bitdo-xcloud: xboxdrv não encontrado. Instale-o (CachyOS/Arch: paru -S xboxdrv)." >&2
+	exit 127
+fi
+
+# A mágica: --force-feedback (vibração) + --mimic-xpad (compatibilidade com
+# jogos que esperam o driver xpad nativo, incl. Steam/Proton e xCloud).
+exec xboxdrv \
+	--device-by-id "$DEVICE_ID" \
+	--type xbox360 \
+	--detach-kernel-driver \
+	--force-feedback \
+	--mimic-xpad \
+	--silent \
+	--evdev-absmap "$ABSMAP" \
+	--evdev-keymap "$KEYMAP" \
+	$EXTRA_ARGS
